@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minewater Forum · Acceso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f5f0e8;
+      --bg2: #ede8df;
+      --ink: #1a1208;
+      --ink2: #3d3322;
+      --muted: #8c7d65;
+      --border: #d4c9b5;
+      --accent: #0059ff;
+      --accent2: #2d6a4f;
+      --surface: #faf7f2;
+      --danger: #0059ff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+
+    /* LEFT */
+    .left {
+      background: var(--ink);
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      padding: 48px;
+      min-height: 100vh;
+    }
+    /* Grid pattern */
+    .left::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(200,75,47,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,75,47,.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .left-logo {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .left-logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px; letter-spacing: .08em; color: var(--bg);
+    }
+    .left-logo-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px; background: var(--accent); color: #fff;
+      padding: 2px 7px; border-radius: 2px; letter-spacing: .1em;
+    }
+
+    .left-center { position: relative; z-index: 1; }
+    .left-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; letter-spacing: .15em; color: var(--accent);
+      text-transform: uppercase; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .left-eyebrow::before { content:''; width:24px; height:2px; background:var(--accent); }
+    .left-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 7vw, 88px);
+      line-height: .9; letter-spacing: .02em;
+      color: var(--bg); margin-bottom: 24px;
+    }
+    .left-title .acc { color: var(--accent); }
+    .left-desc {
+      font-size: 14px; color: rgba(245,240,232,.5);
+      line-height: 1.8; max-width: 360px;
+    }
+
+    /* Post previews */
+    .left-posts {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 12px; margin-top: 36px;
+    }
+    .lp-item {
+      background: rgba(245,240,232,.05);
+      border: 1px solid rgba(245,240,232,.08);
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px; border-radius: 0 4px 4px 0;
+    }
+    .lp-title { font-size: 13px; font-weight: 600; color: rgba(245,240,232,.85); margin-bottom: 4px; }
+    .lp-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; color: rgba(245,240,232,.3);
+    }
+
+    .left-footer {
+      position: relative; z-index: 1;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; color: rgba(245,240,232,.3); letter-spacing: .08em;
+    }
+
+    /* RIGHT */
+    .right {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 64px;
+      background: var(--surface);
+      border-left: 3px solid var(--ink);
+    }
+    .back-btn {
+      position: absolute; top: 24px; left: 24px;
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--muted); font-size: 12px; text-decoration: none;
+      font-family: 'DM Mono', monospace; letter-spacing: .05em;
+      padding: 7px 14px; border: 1px solid var(--border); border-radius: 3px;
+      background: var(--bg); transition: all .2s;
+    }
+    .back-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+    .right-inner { width: 100%; max-width: 380px; }
+
+    .form-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: .15em; color: var(--muted);
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .form-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 44px; letter-spacing: .03em; margin-bottom: 6px;
+    }
+    .form-sub { font-size: 13px; color: var(--muted); margin-bottom: 36px; }
+
+    /* Divider */
+    .rule { height: 2px; background: var(--ink); margin-bottom: 32px; position: relative; }
+    .rule::after {
+      content: 'ACCESO';
+      position: absolute; top: 50%; right: 0; transform: translateY(-50%);
+      font-family: 'DM Mono', monospace;
+      font-size: 9px; letter-spacing: .15em;
+      background: var(--surface); padding-left: 10px; color: var(--muted);
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; }
+    .form-group label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; font-weight: 500; letter-spacing: .1em;
+      color: var(--ink2); text-transform: uppercase;
+    }
+    .input-wrap { position: relative; display: flex; align-items: center; }
+    .input-wrap svg.ii { position: absolute; left: 13px; pointer-events: none; color: var(--muted); }
+    .input-wrap input {
+      width: 100%;
+      background: var(--bg); border: 2px solid var(--border);
+      border-radius: 3px; padding: 13px 44px 13px 42px;
+      color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 14px;
+      outline: none; transition: all .2s;
+    }
+    .input-wrap input:focus {
+      border-color: var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .input-wrap input::placeholder { color: var(--muted); }
+    .eye-btn {
+      position: absolute; right: 12px;
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); padding: 4px; transition: color .15s;
+    }
+    .eye-btn:hover { color: var(--ink); }
+
+    .error-box {
+      background: rgba(200,75,47,.08);
+      border: 2px solid rgba(200,75,47,.3);
+      border-left: 4px solid var(--accent);
+      color: var(--accent); font-size: 13px;
+      padding: 11px 15px; border-radius: 3px;
+      margin-bottom: 16px; display: none;
+      font-family: 'DM Mono', monospace;
+    }
+    .error-box.show { display: block; }
+
+    .btn-login {
+      width: 100%;
+      background: var(--ink); color: var(--bg);
+      border: 2px solid var(--ink); border-radius: 3px;
+      padding: 15px; font-size: 15px; font-weight: 700;
+      font-family: 'DM Sans', sans-serif; cursor: pointer;
+      transition: all .2s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-login:hover:not(:disabled) {
+      background: var(--accent); border-color: var(--accent);
+      box-shadow: 4px 4px 0 var(--ink);
+      transform: translate(-2px, -2px);
+    }
+    .btn-login:disabled { opacity: .5; cursor: not-allowed; }
+
+    .spinner {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid rgba(245,240,232,.3);
+      border-top-color: var(--bg);
+      animation: spin .7s linear infinite; display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hint {
+      margin-top: 28px; text-align: center;
+      font-size: 12px; color: var(--muted);
+      font-family: 'DM Mono', monospace; letter-spacing: .03em;
+      line-height: 1.8;
+    }
+    .hint strong { color: var(--ink); }
+
+    @media (max-width: 768px) {
+      body { grid-template-columns: 1fr; }
+      .left { display: none; }
+      .right { padding: 48px 24px; border-left: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LEFT -->
+<div class="left">
+  <div class="left-logo">
+    <span class="left-logo-text">Minewater Forum</span>
+    <span class="left-logo-badge">PRIVADO</span>
+  </div>
+
+  <div>
+    <div class="left-center">
+      <div class="left-eyebrow">Foro de la comunidad</div>
+      <h2 class="left-title">
+        DEBATE<br/>
+        <span class="acc">Y OPINA</span><br/>
+        LIBREMENTE
+      </h2>
+      <p class="left-desc">
+        El lugar donde la comunidad conversa. Publica tu opinión, responde a otros y contribuye al debate.
+      </p>
+    </div>
+
+    <div class="left-posts">
+      <div class="lp-item">
+        <div class="lp-title">Bienvenidos al foro de Minewater</div>
+        <div class="lp-meta">OWNER · 14 RESPUESTAS</div>
+      </div>
+      <div class="lp-item">
+        <div class="lp-title">Normas de convivencia del foro</div>
+        <div class="lp-meta">ADMIN · 7 RESPUESTAS</div>
+      </div>
+      <div class="lp-item">
+        <div class="lp-title">¿Cuándo es el próximo evento?</div>
+        <div class="lp-meta">USER · 3 RESPUESTAS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="left-footer">MINEWATER FORUM · ACCESO PRIVADO · SUPABASE</div>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+  <a href="index.html" class="back-btn">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    INICIO
+  </a>
+
+  <div class="right-inner">
+    <div class="form-eyebrow">Identificación</div>
+    <h1 class="form-title">ACCEDER</h1>
+    <p class="form-sub">Usa tu cuenta de Minewater para entrar</p>
+
+    <div class="rule"></div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <div class="input-wrap">
+          <svg class="ii" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          <input type="email" id="email" placeholder="tu@correo.com" required autocomplete="email"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <div class="input-wrap">
+          <svg class="ii" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password"/>
+          <button type="button" class="eye-btn" id="eyeBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="eyeIcon">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="error-box" id="errorBox"></div>
+
+      <button type="submit" class="btn-login" id="loginBtn">
+        <span id="btnLabel">Entrar al foro</span>
+        <div class="spinner" id="spinner"></div>
+      </button>
+    </form>
+
+    <div class="hint">
+      ¿Sin cuenta? Contacta con el <strong>OWNER</strong><br/>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL      = "https://gkuuwuqwumoorqmqkuka.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdrdXV3dXF3dW1vb3JxbXFrdWthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NjUwMDksImV4cCI6MjA5MDQ0MTAwOX0.ME8C09iSbowqcak2Bezbd4otWzTXyR3bV8kf4hfodUg";
+  const { createClient } = supabase;
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  (async () => {
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      if (session) window.location.href = 'forum.html';
+    } catch(_) {}
+  })();
+
+  document.getElementById('eyeBtn').addEventListener('click', () => {
+    const inp  = document.getElementById('password');
+    const icon = document.getElementById('eyeIcon');
+    if (inp.type === 'password') {
+      inp.type = 'text';
+      icon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+        <line x1="1" y1="1" x2="23" y2="23"/>`;
+    } else {
+      inp.type = 'password';
+      icon.innerHTML = `<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>`;
+    }
+  });
+
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const errBox   = document.getElementById('errorBox');
+    const btn      = document.getElementById('loginBtn');
+    const label    = document.getElementById('btnLabel');
+    const spinner  = document.getElementById('spinner');
+
+    errBox.classList.remove('show');
+    btn.disabled = true;
+    label.textContent = 'Entrando…';
+    spinner.style.display = 'block';
+
+    try {
+      const { error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      window.location.href = 'forum.html';
+    } catch (err) {
+      const msgs = {
+        'Invalid login credentials': 'Correo o contraseña incorrectos.',
+        'Email not confirmed': 'Confirma tu correo antes de entrar.',
+        'Too many requests': 'Demasiados intentos. Espera un momento.',
+      };
+      errBox.textContent = msgs[err.message] || 'Error al iniciar sesión.';
+      errBox.classList.add('show');
+      btn.disabled = false;
+      label.textContent = 'Entrar al foro';
+      spinner.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>
